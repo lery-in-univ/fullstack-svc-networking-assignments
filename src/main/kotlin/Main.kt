@@ -1,7 +1,13 @@
 fun main(args: Array<String>) {
-    println("Hello World!")
+    if (args.isEmpty()) {
+       println("Argument is empty, please pass a arguments client or server")
+       return
+    }
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
+    val mode = args[0]
+    when {
+        mode == "server" -> runServer()
+        mode == "client" -> runClient()
+        else -> println("Invalid arguments: ${mode}")
+    }
 }

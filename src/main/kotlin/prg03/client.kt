@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 
-fun makeMessage(message: String)
-        = Clientstreaming.Message.newBuilder().setMessage(message).build()
+fun makeMessage(message: String): Clientstreaming.Message
+    = Clientstreaming.Message.newBuilder().setMessage(message).build()
 
 fun generateMessages(): Flow<Clientstreaming.Message> {
     val messages = listOf(
@@ -29,7 +29,7 @@ fun generateMessages(): Flow<Clientstreaming.Message> {
 
 suspend fun sendMessage(stub: ClientStreamingGrpcKt.ClientStreamingCoroutineStub) {
     val response = stub.getServerResponse(generateMessages())
-    print("[server to client] ${response.value}")
+    println("[server to client] ${response.value}")
 }
 
 fun runClient() = runBlocking {

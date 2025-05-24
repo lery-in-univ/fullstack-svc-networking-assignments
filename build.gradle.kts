@@ -37,14 +37,6 @@ kotlin {
     jvmToolchain(8)
 }
 
-sourceSets {
-    main {
-        proto {
-            srcDir("src/main/proto")
-        }
-    }
-}
-
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:$grpcVersion"

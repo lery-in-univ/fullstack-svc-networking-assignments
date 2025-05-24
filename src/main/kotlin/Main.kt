@@ -1,3 +1,3 @@
 fun main(args: Array<String>) {
-    prg01.run(args)
+    prg02.run(args)
 }

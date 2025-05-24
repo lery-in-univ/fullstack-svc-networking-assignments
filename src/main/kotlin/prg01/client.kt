@@ -20,4 +20,6 @@ fun runClient() = runBlocking {
     val response = stub.myFunction(request)
 
     println("gRPC result: ${response.value}")
+
+    channel.shutdown()
 }

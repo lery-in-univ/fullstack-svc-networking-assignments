@@ -1,16 +1,16 @@
-package prg02
+package prg03
 
-import bidirectional.BidirectionalGrpcKt.BidirectionalCoroutineStub
-import bidirectional.BidirectionalOuterClass.Message
+import clientstreaming.ClientStreamingGrpcKt
+import clientstreaming.Clientstreaming
 import io.grpc.ManagedChannelBuilder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 
 fun makeMessage(message: String)
-    = Message.newBuilder().setMessage(message).build()
+        = Clientstreaming.Message.newBuilder().setMessage(message).build()
 
-fun generateMessages(): Flow<Message> {
+fun generateMessages(): Flow<Clientstreaming.Message> {
     val messages = listOf(
         makeMessage("message #1"),
         makeMessage("message #2"),
@@ -27,11 +27,9 @@ fun generateMessages(): Flow<Message> {
     }
 }
 
-suspend fun sendMessage(stub: BidirectionalCoroutineStub) {
-    val responses = stub.getServerResponse(generateMessages())
-    responses.collect {
-        println("[server to client] ${it.message}")
-    }
+suspend fun sendMessage(stub: ClientStreamingGrpcKt.ClientStreamingCoroutineStub) {
+    val response = stub.getServerResponse(generateMessages())
+    print("[server to client] ${response.value}")
 }
 
 fun runClient() = runBlocking {
@@ -40,7 +38,7 @@ fun runClient() = runBlocking {
         .usePlaintext()
         .build()
 
-    val stub = BidirectionalCoroutineStub(channel)
+    val stub = ClientStreamingGrpcKt.ClientStreamingCoroutineStub(channel)
     sendMessage(stub)
 
     channel.shutdown()

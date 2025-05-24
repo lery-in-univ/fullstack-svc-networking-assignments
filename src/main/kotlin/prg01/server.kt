@@ -1,3 +1,7 @@
+package prg01
+
+import HelloGrpc
+import MyServiceGrpcKt
 import io.grpc.ServerBuilder
 import java.util.concurrent.Executors
 

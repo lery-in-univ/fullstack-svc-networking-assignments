@@ -9,6 +9,7 @@ import java.util.concurrent.Executors
 
 class BidirectionalService : BidirectionalGrpcKt.BidirectionalCoroutineImplBase() {
     override fun getServerResponse(requests: Flow<BidirectionalOuterClass.Message>): Flow<BidirectionalOuterClass.Message> {
+        println("Server processing gRPC bidirectional streaming.")
         return flow {
             requests.collect {
                 value -> emit(value)
